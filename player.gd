@@ -23,7 +23,7 @@ func texture(i,size):
 	var scale = Vector2((iss.x/(iss.x/tw))/64, (iss.y/(iss.y/th))/64)
 	set_scale(scale)
 	position.x = OS.get_window_size().x/2
-	position.y = OS.get_window_size().y/2
+	position.y = (OS.get_window_size().y - (OS.get_window_size().y - OS.get_window_size().x))/2
 	pass
 
 
