@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://world.gd" type="Script" id=1]
 [ext_resource path="res://chunk.gd" type="Script" id=2]
 [ext_resource path="res://tile.gd" type="Script" id=3]
 [ext_resource path="res://player.gd" type="Script" id=4]
-[ext_resource path="res://hud.gd" type="Script" id=5]
 
 [sub_resource type="ImageTexture" id=1]
 
@@ -15,14 +14,6 @@ flags = 7
 size = Vector2( 0, 0 )
 
 [sub_resource type="ImageTexture" id=2]
-
-flags = 7
-storage = 0
-lossy_quality = 0.7
-flags = 7
-size = Vector2( 0, 0 )
-
-[sub_resource type="ImageTexture" id=3]
 
 flags = 7
 storage = 0
@@ -55,10 +46,5 @@ _sections_unfolded = [ "Offset" ]
 
 texture = SubResource( 2 )
 script = ExtResource( 4 )
-
-[node name="hud" type="Sprite" parent="." index="2"]
-
-texture = SubResource( 3 )
-script = ExtResource( 5 )
 
 
