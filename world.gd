@@ -5,12 +5,12 @@ extends Node
 # The camera in this game is based on a set number of chunks, details as follows
 var worldSize = 3 # In chunks, size of world to display on the screen
 var chunkSize = 16 # Number of tiles to put in a chunk
-var worldMapChunkSize = 5 # Size of the world map in chunks + 1
+var worldMapChunkSize = 6 # Size of the world map in chunks + 1
 var mapSize = worldMapChunkSize * chunkSize # Size of the map in tiles (for generation)
 var tileSize = OS.get_window_size().x/chunkSize # Size of each tile
 var worldMap
 var camera = Vector2(0,0) # Position of the camera relative to the chunk
-var cameraChunk = Vector2(2,2) # Chunk where the camera resides
+var cameraChunk = Vector2(1,1) # Chunk where the camera resides
 var offset = Vector2(0,0)
 var cameraSpeed = tileSize * 8
 
@@ -68,6 +68,7 @@ func generateChunks():
 	pass
 
 var player
+var structure
 func _ready():
 	# Called when the node is added to the scene for the first time.
 	# Initialization here
@@ -76,6 +77,17 @@ func _ready():
 	player = get_node("player").duplicate()
 	player.texture(0,tileSize)
 	add_child(player)
+	
+	structure = get_node("structure").duplicate()
+	add_child(structure)
+	structure.texture(10,tileSize)
+	
+	
+	pass
+	
+func drawObjects():
+	structure.position.x = camera.x + (cameraChunk.x-1) * chunkSize * tileSize
+	structure.position.y = camera.y + (cameraChunk.y-1) * chunkSize * tileSize
 	pass
 
 func getChunk(loc):
@@ -86,7 +98,7 @@ func getChunk(loc):
 			chunk[x].append(worldMap[loc.x+x][loc.y+y])
 	return chunk
 	
-func drawWorld(camera):
+func drawWorld():
 	for x in range(3):
 		for y in range(3):
 			# Position the chunks according to the camera
@@ -95,11 +107,12 @@ func drawWorld(camera):
 			# For the scrolling infinite world to work, this code checks if we have
 			# reached the world bounds and finds the chunk we display appropriatley
 			var chunkPos = Vector2(x + cameraChunk.x - 1, y + cameraChunk.y - 1)
-			if(x + cameraChunk.x - 1 == worldMapChunkSize): chunkPos.x = 0
+			if(x + cameraChunk.x - 1 == worldMapChunkSize): chunkPos.x = 1 # 0
 			if(x + cameraChunk.x - 1 == 0): chunkPos.x = (worldMapChunkSize-1)
-			if(y + cameraChunk.y - 1 == worldMapChunkSize): chunkPos.y = 0
+			if(y + cameraChunk.y - 1 == worldMapChunkSize): chunkPos.y = 1 # 0
 			if(y + cameraChunk.y - 1 == 0): chunkPos.y = (worldMapChunkSize-1)
 			chunks[x][y].update(getChunk(chunkPos))
+	drawObjects()
 	pass
 func _process(delta):
 	# Called every frame. Delta is time since last frame.
@@ -131,5 +144,5 @@ func _process(delta):
 		camera.y = chunkSize * tileSize
 		cameraChunk.y = cameraChunk.y + 1
 	print(cameraChunk)
-	drawWorld(camera)
+	drawWorld()
 	pass
