@@ -8,7 +8,7 @@ var tileSize = OS.get_window_size().x/worldSize
 var id
 
 func texture(id,size):
-	var texture = load(str("res://assets/land/tile/medievalTile_",id,".png"))
+	var texture = load(str("res://assets/",id,".png"))
 	set_texture(texture);
 	id = id
 	self.visible = true;
@@ -23,3 +23,10 @@ func _ready():
 	# Initialization here
 	self.visible = false
 	pass
+# Position in world
+var worldPos = Vector2()
+func setPos(p):
+	worldPos = p
+	pass
+func getPos():
+	return worldPos
